@@ -1,5 +1,117 @@
 # **EEGBCI Sensorimotor Dynamics**  
-**Within-Subject ERP and ERD Analysis of Voluntary Hand Movement**
+
+## **Repository Overview**
+This repository contains two related EEG analyses of sensorimotor dynamics during voluntary hand movement, using data from the MNE-EEGBCI Motor Movement/Imagery Dataset:
+- **Single-subject demonstration** (Subject 3, run 3)
+- **Multi-subject group analysis** (Subjects 3-10, run 3, N=8)
+
+## **Dataset information:**
+- **Dataset name:** EEG Motor Movement/Imagery Dataset (EEGBCI)
+- **Source:** [PhysioNet](https://physionet.org/content/eegmmidb/1.0.0/)
+- **EEG montage:** 64-channel EEG (10–20 system)
+- **Participants:** 109 healthy subjects
+- **Runs per subject:** 14
+
+---
+
+## **Reproducibility**
+To run this project:
+
+```bash
+pip install -r requirements.txt
+```
+Open and execute the notebook from top to bottom. Raw EEG data is downloaded automatically via MNE-Python.
+
+---
+
+## **Future Extensions**
+Possible extensions include:
+- Comparison of real vs. imagined movements
+- Cluster-based permutation statistics
+- Source-space localization
+- Decoding (classification of left vs. right movement)
+
+---
+
+## **License**
+MIT License
+
+
+---
+
+
+## Multi-Subject Voluntary Hand Movement Group Analysis N=8 (Main) - February 18, 2026
+
+## **Overview**
+This analysis extends the original single-subject demonstration to a group-level analysis (N=8 subjects, 3-10, run 3). The same  methodology is preserved.
+
+The pipeline is modularized for scalability, enabling statistical inference and validation of the trends observed in the single-subject analysis.
+
+---
+
+- **Selection:**
+  - Subject: 3-10 (N=8)
+  - Run: 3
+  - Task: Open and close left or right fist (real movement)
+
+---
+
+## **Methods**
+
+Multi-subject adaptations from the original single-subject pipeline are noted below:
+
+### **1-3. Loading, QC, Preprocessing**
+- Functions created for reusability (load_subject, preprocess_raw)
+- QC plots (PSD) limited to first 2 subjects
+
+### **4. ICA & Artifact Removal**
+- Automated EOG detection via correlation with Fp1/Fp2
+- Only the strongest EOG component removed 
+- Overwriting raw after ICA instead of keeping raw + raw_post_ica
+
+### **5. Epoching**
+- Identical parameters to single-subject (baseline: -0.2–0 s)
+- Baseline contamination acknowledged as shared limitation
+
+### **6. ERD Analysis**
+- TFR computation wrapped in compute_power() function
+- Values stored per subject for group comparison
+
+### **7. ERP Analysis**
+- Averaging trials to 1 value per subject instead of retaining all trials
+- Combining both hands into single contra/ipsi values instead of separate left/right tests
+
+### **8. Master Loop & Data Validation**
+- process_one_subject() orchestrates pipeline
+- Results stored in dictionary, converted to DataFrame
+- ERP values converted from volts to microvolts
+
+### **9. Plotting & H1 testing**
+- Paired t-test across 8 subjects instead of no statistical test
+- Group bar plot with SEM instead of individual time-frequency plots
+
+### **10. Plotting & H2 testing**
+- Single paired t-test across subjects instead of two per-subject t-tests
+- Group bar plot with SEM instead of individual ERP waveforms/topomaps
+
+---
+
+## **Results**
+- **H1 – Mu/Beta ERD (8–30 Hz):** Movement elicited significantly stronger desynchronization compared to rest, t(7) = -2.601, p = 0.035. The observed t-value exceeds the critical value (±2.365) under α = 0.05, with df=7.
+- **H2 – ERP Lateralization (300–600 ms):** Contralateral electrodes showed significantly reduced amplitudes relative to ipsilateral electrodes, t(7) = -3.193, p = 0.015, Cohen's d = -1.13 (large effect).
+
+---
+
+## **Limitations**
+- Sample size (N=8) modest, though sufficient for effect detection
+- Baseline contamination from rapid task design persists
+- Findings should be considered preliminary
+
+
+---
+
+
+## Within-Subject Voluntary Hand Movement Analysis (Original Demonstration) - February 11, 2026
 
 ## **Overview**
 This project presents a within-subject, within-run EEG analysis of sensorimotor dynamics during voluntary hand movement, using data from the MNE-EEGBCI Motor Movement/Imagery Dataset. The analysis focuses on event-related spectral desynchronization (ERD) and event-related potentials (ERP) associated with left and right fist movements, with attention to preprocessing rationale, signal interpretation, and methodological limitations.
@@ -8,16 +120,10 @@ The goal of this project is to demonstrate a complete, reproducible EEG analysis
 
 ---
 
-## **Dataset**
-- **Dataset:** EEG Motor Movement/Imagery Dataset (EEGBCI)
-- **Source:** [PhysioNet](https://physionet.org/content/eegmmidb/1.0.0/)
-- **Participants:** 109 healthy subjects
-- **Runs per subject:** 14
 - **Selection:**
   - Subject: 3
   - Run: 3
   - Task: Open and close left or right fist (real movement)
-- **EEG montage:** 64-channel EEG (10–20 system)
 
 ---
 
@@ -100,28 +206,3 @@ Motor-related ERPs should peak approximately 200–500 ms after movement onset
 - Baseline contamination due to rapid task structure
 
 This project is intended as a methodological demonstration, not definitive claims.
-
----
-
-## **Reproducibility**
-To run this project:
-
-```bash
-pip install -r requirements.txt
-```
-Open and execute the notebook from top to bottom. Raw EEG data is downloaded automatically via MNE-Python.
-
----
-
-## **Future Extensions**
-Possible extensions include:
-- Multi-subject analysis with mixed-effects models
-- Comparison of real vs. imagined movements
-- Cluster-based permutation statistics
-- Source-space localization
-- Decoding (classification of left vs. right movement)
-
----
-
-## **License**
-MIT License
