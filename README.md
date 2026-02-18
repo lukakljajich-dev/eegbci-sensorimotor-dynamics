@@ -2,8 +2,9 @@
 
 ## **Repository Overview**
 This repository contains two related EEG analyses of sensorimotor dynamics during voluntary hand movement, using data from the MNE-EEGBCI Motor Movement/Imagery Dataset:
-- **Single-subject demonstration** (Subject 3, run 3)
 - **Multi-subject group analysis** (Subjects 3-10, run 3, N=8)
+- **Single-subject within-run analysis** (Subject 3, run 3)
+
 
 ## **Dataset information:**
 - **Dataset name:** EEG Motor Movement/Imagery Dataset (EEGBCI)
@@ -11,6 +12,21 @@ This repository contains two related EEG analyses of sensorimotor dynamics durin
 - **EEG montage:** 64-channel EEG (10–20 system)
 - **Participants:** 109 healthy subjects
 - **Runs per subject:** 14
+
+---
+
+## **Research Questions & Hypotheses**
+Two hypotheses guided the analysis:
+
+### **H1 – Movement vs. Rest (ERD)**
+Real hand movement (T1/T2) should produce stronger desynchronization in sensorimotor rhythms (mu/beta, 8–30 Hz) compared to rest (T0).
+
+**H1 Test:** Baseline-corrected time-frequency power (ERSP) was compared between movement and rest epochs over sensorimotor electrodes (C3, C4).
+
+### **H2 – Motor ERP Lateralization**
+Motor-related ERPs should show greater amplitude over the contralateral versus ipsilateral motor cortex during the post-movement window (approx. 300–600 ms).
+
+**H2 Test:** Mean ERP amplitudes were extracted from contralateral and ipsilateral electrodes (C3/C4) and statistically compared.
 
 ---
 
@@ -31,23 +47,17 @@ Possible extensions include:
 - Source-space localization
 - Decoding (classification of left vs. right movement)
 
----
-
 ## **License**
 MIT License
 
-
 ---
 
-
-## Multi-Subject Voluntary Hand Movement Group Analysis N=8 (Main) - February 18, 2026
+## **Multi-Subject Voluntary Hand Movement Group Analysis N=8 - February 18, 2026**
 
 ## **Overview**
 This analysis extends the original single-subject demonstration to a group-level analysis (N=8 subjects, 3-10, run 3). The same  methodology is preserved.
 
 The pipeline is modularized for scalability, enabling statistical inference and validation of the trends observed in the single-subject analysis.
-
----
 
 - **Selection:**
   - Subject: 3-10 (N=8)
@@ -107,38 +117,19 @@ Multi-subject adaptations from the original single-subject pipeline are noted be
 - Baseline contamination from rapid task design persists
 - Findings should be considered preliminary
 
-
 ---
 
-
-## Within-Subject Voluntary Hand Movement Analysis (Original Demonstration) - February 11, 2026
+## **Within-Subject Voluntary Hand Movement Analysis - February 11, 2026**
 
 ## **Overview**
 This project presents a within-subject, within-run EEG analysis of sensorimotor dynamics during voluntary hand movement, using data from the MNE-EEGBCI Motor Movement/Imagery Dataset. The analysis focuses on event-related spectral desynchronization (ERD) and event-related potentials (ERP) associated with left and right fist movements, with attention to preprocessing rationale, signal interpretation, and methodological limitations.
 
 The goal of this project is to demonstrate a complete, reproducible EEG analysis pipeline from raw data to interpretable neurophysiological results, than to make population-level claims or inferences.
 
----
-
 - **Selection:**
   - Subject: 3
   - Run: 3
   - Task: Open and close left or right fist (real movement)
-
----
-
-## **Research Questions & Hypotheses**
-Two hypotheses guided the analysis:
-
-### **H1 – Movement vs. Rest (ERD)**
-Real hand movement (T1/T2) should produce stronger desynchronization in sensorimotor rhythms (mu/beta, 8–30 Hz) compared to rest (T0).
-
-**H1 Test:** Baseline-corrected time-frequency power (ERSP) was compared between movement and rest epochs over sensorimotor electrodes (C3, C4).
-
-### **H2 – Motor ERP Lateralization**
-Motor-related ERPs should peak approximately 200–500 ms after movement onset and show greater amplitude over the contralateral motor cortex.
-
-**H2 Test:** ERP peak amplitude and latency were quantified at electrodes C3 and C4, and contralateral vs. ipsilateral responses were compared using paired, within-trial statistics.
 
 ---
 
@@ -205,4 +196,5 @@ Motor-related ERPs should peak approximately 200–500 ms after movement onset
 - No group-level statistics
 - Baseline contamination due to rapid task structure
 
-This project is intended as a methodological demonstration, not definitive claims.
+This project was intended as a methodological demonstration, not definitive claims.
+
